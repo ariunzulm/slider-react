@@ -59,8 +59,11 @@ export default function Slider() {
         {data.map((dot, i) => {
           return (
             <div
+              onClick={() => {
+                setIndex(i);
+              }}
               key={"dot" + i}
-              className={`rounded-full w-2 h-2 ${
+              className={`cursor-pointer rounded-full w-2 h-2 ${
                 i === index ? "bg-violet-600" : "bg-white"
               }`}
             ></div>
