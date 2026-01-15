@@ -11,38 +11,62 @@ export default function Slider() {
   const [index, setIndex] = useState(0);
 
   const nextSlide = () => {
-    if (index === person.length) {
-      setIndex(0);
-    } else {
-      setIndex((prev) => prev + 1);
-    }
+    // if (index === person.length) {
+    //   setIndex(0);
+    // } else {
+    //   setIndex((prev) => prev + 1);
+    // }
+    if (index === person.length - 1) setIndex(0);
+    else setIndex(index + 1);
   };
   const prevSlide = () => {
-    if (index === person.length) {
-      setIndex(0);
-    } else {
-      setIndex((prev) => prev - 1);
-    }
+    // if (index === person.length) {
+    //   setIndex(0);
+    // } else {
+    //   setIndex((prev) => prev - 1);
+    // }
+    if (index === 0) setIndex(person.length - 1);
+    else setIndex(index - 1);
   };
 
   return (
-    <div className="w-200 h-112.5 shadow-2xl flex transform-3d md:transform-flat ">
-      <button onClick={prevSlide}>
-        <SquareChevronLeft
-          className="w-10 h-10 fill-slate-500 text-white cursor-pointer hover:fill-violet-500 "
-          strokeWidth={1}
-        />
-      </button>
+    <div className="overflow-hidden relative">
+      <div className="w-200 h-112.5 shadow-2xl flex">
+        <button onClick={prevSlide}>
+          <SquareChevronLeft
+            className="w-10 h-10 fill-slate-500 text-white cursor-pointer hover:fill-violet-500 "
+            strokeWidth={1}
+          />
+        </button>
 
-      <DataSlider data={data?.[index]} />
+        <div
+          className={`"flex transition ease-out duration-300 translate-x-[-${
+            index * 100
+          }]`}
+        >
+          <DataSlider data={data[index]} />
+        </div>
 
-      <button onClick={nextSlide}>
-        <SquareChevronRight
-          className="w-10 h-10 fill-slate-500 text-white cursor-pointer hover:fill-violet-500"
-          fill="currentColor"
-          strokeWidth={1}
-        />
-      </button>
+        <button onClick={nextSlide}>
+          <SquareChevronRight
+            className="w-10 h-10 fill-slate-500 text-white cursor-pointer hover:fill-violet-500"
+            fill="currentColor"
+            strokeWidth={1}
+          />
+        </button>
+      </div>
+      <div className="absolute bottom-0 py-4 flex justify-center gap-3 w-full">
+        {data.map((dot, i) => {
+          return (
+            <div
+              key={"dot" + i}
+              className={`rounded-full w-2 h-2 ${
+                i === index ? "bg-violet-600" : "bg-white"
+              }`}
+            ></div>
+          );
+        })}
+      </div>
     </div>
   );
 }
